@@ -1,5 +1,5 @@
 import Notification from '@/components/notification';
-import { ReactNode, createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 // Some notification types for styling purposes
 type NotificationType = 'success' | 'error' | 'warning' | 'hint';
@@ -8,11 +8,9 @@ interface NotificationContextProps {
     showNotification: (message: string, type: NotificationType) => void;
 }
 
-const NotificationContext = createContext<NotificationContextProps>({
-    showNotification: () => { },
-});
+const NotificationContext = createContext<NotificationContextProps>({} as NotificationContextProps);
 
-export const NotificationProvider = ({ children }: { children: ReactNode }) => {
+export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
     const [notification, setNotification] = useState<{ message: string; type: NotificationType } | null>(null);
 
     const showNotification = (message: string, type: NotificationType) => {

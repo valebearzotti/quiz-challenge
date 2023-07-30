@@ -2,11 +2,20 @@ import { useNotification } from '@/context/notificationContext';
 import { providers } from 'ethers';
 import { useEffect, useState } from 'react';
 
-declare var window: any;
+import type { MetaMaskInpageProvider } from '@metamask/providers';
+
+interface EthereumWindow extends Window {
+    ethereum: MetaMaskInpageProvider & {
+        request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+        on: (event: string, callback: (accounts: string[]) => void) => void;
+        removeAllListeners: (event: string) => void;
+    };
+}
+
+declare let window: EthereumWindow;
 
 export const useWeb3 = () => {
     const [provider, setProvider] = useState<providers.Web3Provider | null>(null);
-    const [signer, setSigner] = useState<providers.JsonRpcSigner | null>(null);
     const [account, setAccount] = useState<string | null>(null);
 
     const [loading, setLoading] = useState<boolean>(false);
@@ -15,7 +24,6 @@ export const useWeb3 = () => {
 
     const disconnectWallet = () => {
         setProvider(null);
-        setSigner(null);
         setAccount(null);
     }
 
@@ -58,6 +66,11 @@ export const useWeb3 = () => {
                     return Promise.reject(addError);
                 }
             }
+
+            // Other error
+            showNotification('Error switching network', 'error');
+            return Promise.reject(error);
+
         }
     }
 
@@ -77,9 +90,15 @@ export const useWeb3 = () => {
 
             showNotification('Token added to Metamask', 'success');
         } catch (error: any) {
-            // User rejected the request
-            showNotification('User rejected adding token', 'error');
-            return Promise.reject(error);
+            if (error.code === 4001) {
+                // User rejected the request
+                showNotification('User rejected adding token', 'warning');
+                return Promise.reject(error);
+            } else {
+                // Other error
+                showNotification('Error adding token', 'error');
+                return Promise.reject(error);
+            }
         }
     }
 
@@ -91,11 +110,10 @@ export const useWeb3 = () => {
                 // Request account access
                 await window.ethereum.request({ method: 'eth_requestAccounts' });
                 // Set provider
-                const provider = new providers.Web3Provider(window.ethereum);
+                const provider = new providers.Web3Provider(window.ethereum as unknown as providers.ExternalProvider);
                 setProvider(provider);
                 // Set signer
                 const signer = provider.getSigner();
-                setSigner(signer);
                 // Set account
                 const account = await signer.getAddress();
                 setAccount(account);
@@ -108,16 +126,18 @@ export const useWeb3 = () => {
                         });
                 }
 
-                addToken()
-                    .catch(() => {
-                        disconnectWallet();
-                    });
+                await addToken()
+                // I'm not catching any errors here intentionally, as I want the user to be able to use the app even if they don't add the token. Maybe they already added it before.
 
                 showNotification('Wallet connection successful!', 'success');
             } catch (error: any) {
-                // User rejected the request.
-                showNotification('User rejected connection', 'error');
-                //setError(error)
+                if (error.code === 4001) {
+                    // User rejected the request.
+                    showNotification('User rejected connection', 'error');
+                } else {
+                    // Other error
+                    showNotification('Error connecting wallet', 'error');
+                }
             }
         } else {
             // Warn user if no wallet is detected
@@ -141,7 +161,7 @@ export const useWeb3 = () => {
                 window.ethereum.removeAllListeners('accountsChanged');
             }
         }
-    }, []);
+    }, [showNotification]);
 
     return {
         connectWallet,
