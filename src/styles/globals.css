@@ -4,10 +4,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
-@keyframes slideDown {
+@keyframes slideUp {
   0% {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(1rem);
   }
   100% {
     opacity: 1;
@@ -16,14 +16,16 @@
 }
 
 @layer utilities {
-  .slide-down {
-    animation: slideDown 0.5s ease-in-out;
+  .slide-up {
+    animation: slideUp 0.5s ease-in-out;
   }
 }
 
 @layer base {
   html,
   body {
+    background-color: #1f1f1f;
     font-family: Inter, system-ui, sans-serif;
+    color: white;
   }
 }

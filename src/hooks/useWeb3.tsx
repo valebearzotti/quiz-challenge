@@ -17,6 +17,7 @@ declare let window: EthereumWindow;
 export const useWeb3 = () => {
     const [provider, setProvider] = useState<providers.Web3Provider | null>(null);
     const [account, setAccount] = useState<string | null>(null);
+    const [signer, setSigner] = useState<providers.JsonRpcSigner | null>(null);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -114,6 +115,7 @@ export const useWeb3 = () => {
                 setProvider(provider);
                 // Set signer
                 const signer = provider.getSigner();
+                setSigner(signer);
                 // Set account
                 const account = await signer.getAddress();
                 setAccount(account);
@@ -168,6 +170,7 @@ export const useWeb3 = () => {
         disconnectWallet,
         account,
         provider,
+        signer,
         loading,
     };
 };
