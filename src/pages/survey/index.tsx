@@ -1,7 +1,6 @@
 import { Button } from "@/components/button";
 import Question from "@/components/question";
 import { Results } from "@/components/results";
-//import Question from "@/components/question";
 import { useSurvey } from "@/context/surveyContex";
 import { useContract } from "@/hooks/useContract";
 import Head from "next/head";

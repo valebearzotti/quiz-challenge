@@ -1,5 +1,6 @@
 // IRL you'd probably want to use a DB to store all surveys, so this endpoint is used to simulate fetching the survey data instead of just importing the JSON file in the frontend.
 // I also added an ID field to the survey's sample data (and made it an array), so this endpoint can be used to fetch any survey that exists.
+// Update: this endpoint is deprecated I just left it here for reference.
 
 import survey_data from "@/data/sample.json";
 import type { Survey } from '@/types/survey';
