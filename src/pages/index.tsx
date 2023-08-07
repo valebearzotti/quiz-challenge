@@ -1,12 +1,10 @@
 import { Button } from "@/components/button";
-import { useContract } from "@/hooks/useContract";
-import { Survey } from "@/types/survey";
+import survey from "@/data/sample.json";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-export default function Home({ survey }: { survey: Survey }) {
+export default function Home() {
 
-	const { balance, submit } = useContract();
 	const router = useRouter()
 
 	return (
@@ -46,17 +44,4 @@ export default function Home({ survey }: { survey: Survey }) {
 			</div>
 		</>
 	);
-}
-
-export async function getStaticProps() {
-
-	const response = await fetch(`http://localhost:3000/api/survey`)
-
-	const responseData = await response.json();
-
-	return {
-		props: {
-			survey: responseData
-		}
-	}
 }
