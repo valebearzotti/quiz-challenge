@@ -23,15 +23,12 @@ export default function Home() {
 			<div className="flex flex-col gap-4 max-w-[500px] w-full">
 				{survey && (
 					<div className="flex flex-col rounded-lg border border-neutral-600 border-opacity-50 bg-gradient-to-bl from-black via-neutral-900 to-neutral-900 p-4 gap-6">
-						<div className="flex flex-row gap-4">
-							<img src={survey.image} className="object-cover rounded-lg w-[100px] h-[100px]" />
-							<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-4">
+							<div className="flex flex-col gap-4">
 								<h2 className="text-2xl font-bold">
 									{survey.title}
 								</h2>
-								<p>
-									Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quia.
-								</p>
+								<img src={survey.image} className="object-cover rounded-lg w-full h-[200px]" alt="Question image" />
 							</div>
 						</div>
 						<Button

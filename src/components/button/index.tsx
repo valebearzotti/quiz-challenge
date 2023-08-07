@@ -8,7 +8,7 @@ const buttonVariants = cva(
             intent: {
                 primary: 'text-white bg-main400 hover:bg-main500 focus:ring-main500',
                 secondary: 'text-main300 border border-1 border-main300 bg-transparent hover:transparent focus:ring-main300',
-                tertiary: 'px-0 text-main300 bg-transparent hover:transparent focus:ring-main300',
+                tertiary: 'text-main300 bg-transparent hover:transparent focus:ring-main300',
             },
             size: {
                 default: "h-10 py-2 px-4",

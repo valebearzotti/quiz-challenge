@@ -15,7 +15,7 @@ export default function Question() {
                     key={questions[currentQuestionIndex]!.text}
                 />
             </div>
-            <img src={questions[currentQuestionIndex]?.image} className="object-cover rounded-lg w-full h-[300px]" alt="Question image" />
+            <img src={questions[currentQuestionIndex]?.image} className="object-cover rounded-lg w-full h-[200px]" alt="Question image" />
             <div className="flex flex-col gap-4">
                 {questions[currentQuestionIndex]?.options.map((option, index) => (
                     <Button

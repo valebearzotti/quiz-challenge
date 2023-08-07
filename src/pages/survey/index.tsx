@@ -4,6 +4,7 @@ import { Results } from "@/components/results";
 //import Question from "@/components/question";
 import { useSurvey } from "@/context/surveyContex";
 import { useContract } from "@/hooks/useContract";
+import Head from "next/head";
 import { useEffect } from "react";
 
 const Arrow = () => (
@@ -12,17 +13,11 @@ const Arrow = () => (
     </svg>
 )
 
-interface Answer {
-    question: string | undefined;
-    answer: string;
-    index: number;
-}
-
 export default function SurveyPageId() {
 
     const { submit } = useContract();
 
-    const { survey, questions, answers, currentQuestionIndex, answersIds, reset } = useSurvey();
+    const { survey, questions, currentQuestionIndex, answersIds, reset } = useSurvey();
 
     useEffect(() => {
         // Just in case reset the survey on page load
@@ -30,37 +25,42 @@ export default function SurveyPageId() {
     }, [])
 
     return (
-        <div className="flex flex-col gap-2 max-w-[500px] w-full">
-            <div className="flex flex-row gap-4">
+        <>
+            <Head>
+                <title>Quiz App | Survey</title>
+                <meta name="description" content="Tech challenge" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
+            <div className="flex flex-col gap-2 max-w-[500px] w-full">
+                <h1 className="text-2xl font-bold py-1">{survey.title}</h1>
+                <div className="flex flex-col gap-4">
+                    {currentQuestionIndex < questions.length && (
+                        <Question />
+                    )}
+                </div>
+                {currentQuestionIndex >= questions.length && (
+                    <div className="flex flex-col gap-4">
+                        <h2 className="text-lg font-bold">
+                            Thank you for completing the survey!
+                        </h2>
+                        <Results />
+                        <Button intent="primary" onClick={() => {
+                            void submit(survey.id, answersIds);
+                        }}>
+                            Submit
+                        </Button>
+                        <Button intent="secondary" onClick={() => {
+                            reset();
+                        }}>
+                            Restart
+                        </Button>
+
+                    </div>
+                )}
                 <Button intent="tertiary" onClick={() => window.history.back()}>
-                    <Arrow />
-                    Go back
+                    Back to homepage
                 </Button>
             </div>
-            <h1 className="text-2xl font-bold py-1">{survey.title}</h1>
-            <div className="flex flex-col gap-4">
-                {currentQuestionIndex < questions.length && (
-                    <Question />
-                )}
-            </div>
-            {currentQuestionIndex >= questions.length && (
-                <div className="flex flex-col gap-4">
-                    <h2 className="text-lg font-bold">
-                        Thank you for completing the survey!
-                    </h2>
-                    <Results />
-                    <Button intent="primary" onClick={() => {
-                        void submit(1, answersIds);
-                    }}>
-                        Submit
-                    </Button>
-                    <Button intent="secondary" onClick={() => {
-                        reset();
-                    }}>
-                        Restart
-                    </Button>
-                </div>
-            )}
-        </div>
+        </>
     )
 }

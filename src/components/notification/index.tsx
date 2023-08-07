@@ -26,7 +26,7 @@ const Notification = ({ message, type }: NotificationProps) => {
 
     return (
         <NotificationPortal>
-            <div className={`fixed bottom-0 m-6 p-4 ${style} text-white font-normal text-center rounded-md slide-up max-w-[500px] w-full`}>
+            <div className={`fixed bottom-0 m-6 p-4 ${style} text-white font-normal text-center rounded-md slide-up max-w-[500px] w-[95%]`}>
                 {/* To do: Add a custom icon */}
                 {message}
             </div>
