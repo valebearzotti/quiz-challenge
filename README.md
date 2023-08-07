@@ -13,3 +13,5 @@ The project includes the following packages:
 Yet I only use Next.js and Tailwind CSS from this stack. Apart from that, I use [React Query](https://react-query.tanstack.com/) for context management and Ethers.js for interacting with the Ethereum blockchain & ecosystem. I could have used Wagmi or any other similar library and save some time but for this particular project I thought of using Ethers.js and writing my own hooks.
 
 MetaMask docs
+
+The survey's main image was not found so I replaced it with the first's question image.

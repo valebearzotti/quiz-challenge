@@ -10,7 +10,6 @@ export interface Question {
 }
 
 export interface Survey {
-  id: string;
   title: string;
   image: string;
   questions: Question[];

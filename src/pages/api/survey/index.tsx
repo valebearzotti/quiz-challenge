@@ -6,17 +6,6 @@ import type { Survey } from '@/types/survey';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { id } = req.query;
 
-    if (id) {
-        const survey = survey_data.find((survey: Survey) => survey.id === id);
-
-        if (!survey) {
-            return res.status(404).json({ message: "Survey not found" });
-        }
-
-        return res.status(200).json(survey);
-    }
-
-    return null;
+    return res.status(200).json(survey_data as Survey);
 }

@@ -128,7 +128,8 @@ export const useWeb3 = () => {
                         });
                 }
 
-                await addToken()
+                // Add token to Metamask. I implemented it first but then I decided to remove it since the UX is not great, and cannot check if the token is already added.
+                //await addToken()
                 // I'm not catching any errors here intentionally, as I want the user to be able to use the app even if they don't add the token. Maybe they already added it before.
 
                 showNotification('Wallet connection successful!', 'success');
